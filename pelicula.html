@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Peliculas</title>
+  </head>
+  <body>
+    <h1>Peliculas IMBD</h1>
+
+    <script>
+
+      /* 27) Programa una clase llamada Pelicula.
+          La clase recibirá un objeto al momento de instanciarse con los siguentes datos:
+           id de la película en IMDB, titulo, director, año de estreno, país o países de origen, 
+           géneros y calificación en IMBD.
+        - Todos los datos del objeto son obligatorios.
+        - Valida que el id IMDB tenga 9 caracteres, los primeros 2 sean letras y los 7 restantes números.
+        - Valida que el título no rebase los 100 caracteres.
+        - Valida que el director no rebase los 50 caracteres.
+        - Valida que el año de estreno sea un número entero de 4 dígitos.
+          - Valida que el país o paises sea introducidos en forma de arreglo.
+          - Valida que los géneros sean introducidos en forma de arreglo.
+          - Valida que los géneros introducidos esten dentro de los géneros aceptados*.
+          - Crea un método estático que devuelva los géneros aceptados*.
+          - Valida que la calificación sea un número entre 0 y 10 pudiendo ser decimal de una posición.
+          - Crea un método que devuelva toda la ficha técnica de la película.
+          - Apartir de un arreglo con la información de 3 películas genera 3 instancias de la clase de forma automatizada 
+            e imprime la ficha técnica de cada película.
+          * Géneros Aceptados: Action, Adult, Adventure, Animation, Biography, 
+          Comedy, Crime, Documentary ,Drama, Family, Fantasy, Film Noir, Game-Show, History, Horror, Musical, Music, Mystery, News, Reality-TV, 
+          Romance, Sci-Fi, Short, Sport, Talk-Show, Thriller, War, Western.*/
+
+    class Movie{
+
+        constructor({id, title, director,  premiereYear, country, gender, score}){
+            this.id = id;
+            this.title = title;
+            this.director = director;
+            this.premiereYear = premiereYear;
+            this.country = country;
+            this.gender = gender;
+            this.score = score;
+
+            this.validateIMBD(id) ;
+            this.validateTitle(title);
+            this.validateTitle(director);
+            this.validatePremiere(premiereYear);
+            this.validateCountry(country);
+        }
+
+        validateString(property, value){
+            if(!value) return console.warn(`${property} "${value}" es vacío`);
+
+            if(typeof value !== "string") return console.error(`${property} "${value}" ingresado, No es una cadena de texto`);
+
+            return true;
+        }
+        
+        validateLengthString(property, value, length){
+            if(value.length > length) return console.error(`${property} "${value}" excede el número
+            de caracteres permitidos (${length})`);
+
+            return true;
+        }
+
+        validateNumber(property, value){
+          if(!value) return console.warn(`${property} "${value}" es vacío`);
+
+          if(typeof value !== "number") return console.error(`${property} "${value}" ingresado, no es un número`);
+
+          return true;
+        }
+
+        validateArray(property, value){
+          if(!value) return console.warn(`${property} "${value}"" esta vacío`);
+          
+          if(!(value instanceof Array)) return console.error(`${property} "${value}" ingresado, no es un arreglo`);
+        
+          if(value.length === 0) return console.log(`${property} no tiene datos`);
+        
+          for(let chain of value){
+            if(typeof chain !== "string") return console.error(`El valor "${chain}" no es una cadena de texto`);
+            if(chain.length !== 1) return console.log(`El valor "${chain}" debe ser un carácter`) 
+          }
+
+          return true;
+        }
+
+        validateIMBD(id){
+            if (this.validateString("IMBD id", id))
+                if(!(/^([A-Z, a-z]){2}([0-9]){7}$/.test(id))) 
+                    return console.log(`IMBD id "${id}" no es valido, debe tener 9 caracteres, los primeros 2 sean letras 
+                    y los 7 restantes números `);
+                
+                return console.log(`"${id}" ID IMBD Successfully validated!`);        
+        }
+
+        validateTitle(title){
+            if (this.validateString("IMBD title", title))
+                this.validateLengthString("Titulo", title, 100);
+                    
+        }
+
+        validateTitle(director){
+          if (this.validateString("IMBD director", director))
+              this.validateLengthString("Director", director, 50);
+        }
+
+        validatePremiere(premiereYear){
+          if(this.validateNumber("Premiere year", premiereYear))
+              if(!(/^([0-9]){4}$/.test(premiereYear)))
+                return console.log(`Premiere year "${premiereYear}" no es valido, 
+                debe ser un numero entero de 4 dígitos`);
+        
+              //return console.log(`"${premiereYear}" IMBD successfully validated!`);  
+        }
+
+        
+        validateCountry(country){
+          if(this.validateArray("Country", country)) 
+            return console.log(`"${country}" is country validated!`);
+          }
+    }
+  
+   const peli = new Movie({
+      id: "gt3456789", 
+      title: "titulotd3456789", 
+      director: "directortd3456789directortd3456789directortd3456789directortd3456789",
+      premiereYear: "7576",
+      country: ["Vh","E","N","E","Z","U","E","L","A"]
+    })
+        
+    </script>
+  </body>
+</html>

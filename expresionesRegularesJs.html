@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Expresiones Regulares JS</title>
+  </head>
+  <body>
+    <script>
+    
+      let cadena = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque laborum, corrupti quaerat cupiditate pariatur, cum quidem, mollitia non vero consequuntur eaque unde. Asperiores dolores, qui vel provident ea porro et.";
+        
+      //i: ignora entre mayúsculas y minuscula
+      //g: no se queda solo con la primera coincidencia 
+      //let expReg = new RegExp('lorem', 'i');
+
+      let expReg2 = /lorem/ig;
+
+      console.log(expReg2.test(cadena));
+      console.log(expReg2.exec(cadena));
+    </script>
+  </body>
+</html>

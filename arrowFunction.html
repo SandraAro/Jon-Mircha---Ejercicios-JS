@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arrow Function</title>
+</head>
+<body>
+
+    <h1>Arrow Function - Practica</h1>
+    <script>
+        console.log('**************************')
+        console.log("Arrow Function Sumar")
+        const sumar = (a, b, c) => a + b + c
+        console.log(sumar(6, 5, 4))
+        console.log('**************************')
+        const funcionVariasLineas = () => {
+            console.log("Uno")
+            console.log("Dos")
+            console.log("Tres")
+            console.log("Cuatro")
+        }
+        funcionVariasLineas()
+        console.log('**************************')
+        const array = [1,2,3,4,5]
+
+        array.forEach((element,i)=>console.log(`${element} se encuentra en la posición ${i}`))
+        console.log('**************************')
+        <!--Las arrow funcion no se declaran dentro de un objeto literal ellas tienen la capacidad de heredar el contexto globalThis-->
+
+        const perro={
+            nombre: "Kenai",
+            ladrar: ()=>{console.log(this)} 
+        }
+
+        perro.ladrar()
+    </script>   
+</body>
+</html>

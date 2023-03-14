@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Almacen de productos</title>
+    <script src="https://use.fontawesome.com/19ff9aba7d.js"></script>
+</head>
+<body>
+    <h4>Almacen de Productos</h4>
+    <form class="formulario" method="post">
+        <div>
+            <label for="productName">Nombre</label>
+            <input id="productName" name="productName" type="text">
+        </div>
+        <br>
+        <div>
+            Tipo de producto
+            <input id= "ingreso" type="radio" name="productType" value="Ingreso">
+            <label for="ingreso">Ingreso</label>
+            <input id="egreso" type="radio" name="productType" value="Egreso">
+            <label for="egreso">Egreso</label>
+        </div>
+        <br>
+        <div>
+            <label for="productDescripcion">Descripción</label>
+            <input id="productDescripcion" name="productDescripcion" type="text">
+        </div>
+        <br>
+        <div>
+            <label for="productCategory">Categoria</label>
+            <select id="category" name="productCategory">
+                <option value="" ></option>
+                <option value="Producto 1">Categoria 1</option>
+                <option value="Producto 2">Categoria 2</option>
+            </select>
+        </div>
+        <br>
+        <div>
+            <label for="productAmount">Monto</label>
+            <input id="productAmount" name="productAmount" type="number">
+        </div>
+        <div>
+            <br><input type="submit" value="Agregar">
+            <input type="button" value="Enviar">
+        </div>
+    </form>
+    <br>
+    <table id="listado" class="hide">
+        <thead>
+            <th>ID</th>
+            <th>PRODUCTO</th>
+            <th>CATEGORIA</th>
+            <th>DESCRIPCIÓN</th>
+            <th>MONTO</th>
+            <th>TIPO</th>
+            <th>OPCIONES</th>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+
+    <script>
+       document.querySelector("input[type=submit]").addEventListener('click', function(event){
+            event.preventDefault();
+
+            var cont=0;
+            const productName= document.querySelector("input[name=productName]");
+            const productTipo= document.querySelector('input[name=productType]:checked');
+            const productDescripcion= document.querySelector("input[name=productDescripcion]");
+            const productCategory= document.querySelector("#category");
+            const productAmount= document.querySelector("input[name=productAmount]");
+            
+            //Validamos que los campos no esten vacios
+            if(!productName.value){
+                productName.classList.add("Error");
+                return;
+            }
+            productName.classList.remove("Error");
+
+            if(!productTipo){
+                alert("Debe seleccionar un tipo")
+                /* console.log(productTipo.classList.add("Error")); */
+                return;
+            }
+            productTipo.classList.remove("Error");
+
+            if(!productDescripcion.value){
+                productDescripcion.classList.add("Error");
+                return;
+            }
+            productDescripcion.classList.remove("Error");
+
+            if(!productCategory.value){
+                alert("Debe seleccionar una categoria");
+                /* productCategory.classList.add("Error");
+                return; */ 
+            }
+            productCategory.classList.remove("Error");
+
+            if(isNaN(parseInt(productAmount.value)) || parseInt(productAmount.value) <= 0){
+                productAmount.classList.add("Error");
+                return;
+            }
+            productAmount.classList.remove("Error");
+
+            //Llamamos agregar filas
+            agregarFila(productName.value, productTipo.value, productDescripcion.value, productCategory.value, productAmount.value);
+
+            //limpiamos los valores input
+            productName.value ="";
+            productName.focus();
+            //productType.disabled() = true;
+            productDescripcion.value = "";
+            productCategory.value = "";
+            productAmount.value= 0;
+            productDescripcion.focus();
+       });
+
+       function agregarFila(productName, productTipo, productDescripcion, productCategory, productAmount){
+           const row= document.createElement('tr');
+
+            var cont=0;
+
+           const tdName=document.createElement('td');
+           let txtContenido=document.createTextNode(productName);
+           tdName.appendChild(txtContenido);
+           tdName.className="nombre";
+
+           const tdCategoria=document.createElement('td');
+           txtContenido=document.createTextNode(productCategory);
+           tdCategoria.appendChild(txtContenido);
+           tdCategoria.className="categoria";
+
+           const tdDescripcion=document.createElement('td');
+           txtContenido=document.createTextNode(productDescripcion);
+           tdDescripcion.appendChild(txtContenido);
+           tdDescripcion.className="descripcion";
+
+           const tdMonto=document.createElement('td');
+           txtContenido=document.createTextNode(productAmount);
+           tdMonto.appendChild(txtContenido);
+           tdMonto.className="monto";
+
+            const tdTipo=document.createElement('td');
+            txtContenido=document.createTextNode(productTipo);
+            tdTipo.appendChild(txtContenido);
+            tdTipo.className="tipo";
+
+            const tdEliminar=document.createElement('td');
+            const botonEliminar=document.createElement('img');
+            botonEliminar.src='<i class="fa fa-eye" aria-hidden="true"></i>';
+            /* botonEliminar.onClick= eliminarFila; */
+            tdEliminar.appendChild(botonEliminar);
+
+            row.append(cont+1);
+            row.appendChild(tdName);
+            row.appendChild(tdCategoria);
+            row.appendChild(tdDescripcion);
+            row.appendChild(tdMonto);
+            row.appendChild(tdTipo);
+            row.appendChild(tdEliminar);
+
+        const body=document.getElementById("listado").querySelector("tbody").appendChild(row);
+
+        document.getElementById("listado").classList.remove("hide");
+       }
+
+       function Eliminar(e){
+            document.getElementById("listado").deleteRow(-1); 
+            var i = e.parentNode.parentNode.rowIndex;
+            document.getElementById("listado").deleteRow(i);
+       }
+    </script>
+</body>
+</html>

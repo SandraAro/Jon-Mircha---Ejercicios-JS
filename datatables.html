@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tablas Datatable JQuery</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+    
+</head> 
+<body>
+    <h2 >Aplicación de Gastos</h1>
+    <form id="transaccionForm">
+        <div class = "formField">
+            Tipo de transcción 
+           <input id= "ingreso" type="radio" name="transaccionType" value="Ingreso">
+           <label for="ingreso">Ingreso</label>
+           <input id="egreso" type="radio" name="transaccionType" value="Egreso">
+           <label for="egreso">Egreso</label>
+        </div>
+        <br>
+        <div class="formField">
+            <label for="transaccionDescripcion">Descripción</label>
+            <input id="transaccionDescripcion" name="transaccionDescripcion">
+        </div>
+        <br>
+        <div class="formField">
+            <label for="transaccionAmount">Monto</label>
+            <input id="transaccionAmount" name="transaccionAmount">
+        </div>
+        <br>
+        <div class="formField">
+            <label for="transaccionCategory">Categoria</label>
+            <input id="transaccionCategory" name="transaccionCategory">
+        </div>
+        <br>
+        <button type="submit" id="addRow">Añadir datos</button>
+        <br><br>
+      </form>
+
+    
+    <!-- <button id="removeRow">Remover una Fila</button>
+    <br><br> -->
+    <div id="tableFormat">
+        <table id="transaccionTable" onclick="" class="display" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th>Columna 1</th>
+                    <th>Columna 2</th>
+                    <th>Columna 3</th>
+                    <th>Columna 4</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+            
+            <tfoot>
+                <tr>
+                    <th>Columna 1</th>
+                    <th>Columna 2</th>
+                    <th>Columna 3</th>
+                    <th>Columna 4</th>
+                    <th>Opciones</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js
+    "></script>
+    <!-- JS para agregar y eliminar datos de una tabla -->
+    <script>
+            
+        /* form.addEventListener("submit", function(event){
+     	event.preventDefault();
+	    let obtenerDatosForm = new FormData(form);
+
+        let referenciaTabla = document.getElementById("transaccionTable");
+        let nuevaFilaRef = referenciaTabla.insertRow(1);
+
+        let nuevaCeldaRef = nuevaFilaRef.insertCell(0);
+        nuevaCeldaRef.textContent = obtenerDatosForm.get("transaccionType");
+
+        nuevaCeldaRef = nuevaFilaRef.insertCell(1);
+        nuevaCeldaRef.textContent = obtenerDatosForm.get("transaccionDescripcion");
+
+        nuevaCeldaRef = nuevaFilaRef.insertCell(2);
+        nuevaCeldaRef.textContent = obtenerDatosForm.get("transaccionAmount"); 
+
+        nuevaCeldaRef = nuevaFilaRef.insertCell(3);
+        nuevaCeldaRef.textContent = obtenerDatosForm.get("transaccionCategory");
+
+        nuevaCeldaRef = nuevaFilaRef.insertCell(4);
+        nuevaCeldaRef.textContent = "5";
+        console.log(nuevaFilaRef.insertCell(0));
+     }); */
+
+    </script>
+
+    <!-- Script para agregar y eliminar datos de una tabla -->
+
+    <script>
+        $(document).ready(function(){
+           var t= $('#transaccionTable').DataTable();
+           var cont= 1;
+           $('#transaccionForm').on('submit', function(event){
+            event.preventDefault();
+            let celdaType =  $('input:radio[name=transaccionType]:checked').val();
+            
+            let celdaDescripcion = $("#transaccionDescripcion").val();
+            
+            let celdaAmount = $("#transaccionAmount").val();
+            
+            let celdaCategory = $("#transaccionCategory").val();
+            
+            []
+            $('#addRow').on('click', function(){
+                t.row.add([celdaType, celdaDescripcion, celdaAmount, celdaCategory, '<td><button class="eliminar">Eliminar</button></td>']).draw(false);
+                /* cont++; */
+            });
+            $('#addRow').click();
+           });
+
+           /* //Agregar elementos a una tabla
+           $('#addRow').on('click', function(){
+                t.row.add([cont + '.1', cont + '.2', cont + '.3', cont + '.4', cont + '.5', '<td><button class="eliminar">Eliminar</button></td>']).draw(false);
+                cont++;
+           });
+           $('#addRow').click(); */
+
+           //Eliminar fila de una tabla
+           $('#transaccionTable').on('click', '.eliminar', function(){
+               var filas= $(this).closest('tr');
+               console.log(t.row($(filas)).remove().draw())
+            }); 
+        });
+        
+        //Eliminar fila con un botón
+        /* $('#removeRow').on('click', function(){
+                $('tr:last-child').remove();
+           }); */
+        /* $('#removeRow').click(); */
+    </script>
+    <!-- transaccionTable DataTable:
+        {
+        columnDfs: [{
+            targets: -1,
+            render: function(data, type, row, meta){
+                return type === 'display'?'<a href="" class="delete">Eliminar</a>':'';
+            }
+
+        }]
+    } -->
+</body>
+</html>
