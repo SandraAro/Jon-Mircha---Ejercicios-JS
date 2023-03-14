@@ -20,8 +20,8 @@
         - Valida que el título no rebase los 100 caracteres.
         - Valida que el director no rebase los 50 caracteres.
         - Valida que el año de estreno sea un número entero de 4 dígitos.
-          - Valida que el país o paises sea introducidos en forma de arreglo.
-          - Valida que los géneros sean introducidos en forma de arreglo.
+        - Valida que el país o paises sea introducidos en forma de arreglo.
+        - Valida que los géneros sean introducidos en forma de arreglo.
           - Valida que los géneros introducidos esten dentro de los géneros aceptados*.
           - Crea un método estático que devuelva los géneros aceptados*.
           - Valida que la calificación sea un número entre 0 y 10 pudiendo ser decimal de una posición.
@@ -48,6 +48,18 @@
             this.validateTitle(director);
             this.validatePremiere(premiereYear);
             this.validateCountry(country);
+            this.validateGenre(gender);
+        }
+
+        static get listGener(){
+          return ["Action", "Adult", "Adventure", "Animation", "Biography", 
+          "Comedy", "Crime", "Documentary" ,"Drama", "Family", "Fantasy", "Film Noir", 
+          "Game-Show", "History", "Horror", "Musical", "Music", "Mystery", "News", "Reality-TV", 
+          "Romance", "Sci-Fi", "Short", "Sport", "Talk-Show", "Thriller", "War", "Western"];
+        }
+
+        static genersAcept(){
+          return console.info(`Los generos aceptados son: ${Movie.listGener.join(', ')}`);
         }
 
         validateString(property, value){
@@ -82,7 +94,7 @@
         
           for(let chain of value){
             if(typeof chain !== "string") return console.error(`El valor "${chain}" no es una cadena de texto`);
-            if(chain.length !== 1) return console.log(`El valor "${chain}" debe ser un carácter`) 
+            //if(chain.length !== 1) return console.log(`El valor "${chain}" debe ser un carácter`) 
           }
 
           return true;
@@ -116,22 +128,30 @@
         
               //return console.log(`"${premiereYear}" IMBD successfully validated!`);  
         }
-
         
         validateCountry(country){
           if(this.validateArray("Country", country)) 
-            return console.log(`"${country}" is country validated!`);
-          }
+            return console.log(`"${country.join(' ')}" is country validated!`);
+        }
+
+        validateGenre(gender){
+          if(this.validateArray("gender", gender))
+            return console.log(`${gender.join(', ')} are gender's validated!`);
+        }
     }
-  
+
    const peli = new Movie({
       id: "gt3456789", 
       title: "titulotd3456789", 
       director: "directortd3456789directortd3456789directortd3456789directortd3456789",
       premiereYear: "7576",
-      country: ["Vh","E","N","E","Z","U","E","L","A"]
+      country: ["V","E","N","E","Z","U","E","L","A"],
+      gender: ["drama", "terror"]
+
     })
-        
+    
+    Movie.genersAcept();
+           
     </script>
   </body>
 </html>
